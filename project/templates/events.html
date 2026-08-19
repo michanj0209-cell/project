@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Меню{% endblock %}
+
+{% block content %}
+<section class="menu-page">
+    <h1>Наше меню</h1>
+    
+    {% for category_key, dishes_list in categories.items() %}
+        {% if dishes_list %}
+        <div class="menu-section">
+            <h2>{{ category_names[category_key] }} {{ category_key|category_emoji }}</h2>
+            <div class="dish-grid">
+                {% for dish in dishes_list %}
+                <div class="dish-card">
+                    <div class="dish-image">
+                        {% if dish.image %}
+                            <img src="{{ url_for('static', filename='uploads/' + dish.image) }}" alt="{{ dish.title }}" class="dish-photo">
+                        {% else %}
+                            <div style="background-color: {{ dish.title|color_from_name }}; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                <span class="dish-emoji">{{ dish.category|category_emoji }}</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="dish-info">
+                        <h3>{{ dish.title }}</h3>
+                        <span class="dish-category">{{ dish.category|category_label }}</span>
+                        <p class="dish-description">{{ dish.description[:60] }}{% if dish.description|length > 60 %}...{% endif %}</p>
+                        <div class="dish-footer">
+                            <span class="dish-price">{{ dish.price }} грн</span>
+                            <button class="btn-detail" onclick="alert('Страву додано до кошика! 🛒')">Замовити</button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+</section>
+{% endblock %}
