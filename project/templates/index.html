@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Головна{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>Ласкаво просимо до RestaurantHub!</h1>
+    <p>Найкращі страви від найкращих шеф-кухарів. Смакуйте з нами!</p>
+</section>
+
+<section class="featured-dishes">
+    <h2>Наші фірмові страви</h2>
+    <div class="dish-grid">
+        {% for dish in dishes %}
+        <div class="dish-card">
+            <div class="dish-image">
+                {% if dish.image %}
+                    <img src="{{ url_for('static', filename='uploads/' + dish.image) }}" alt="{{ dish.title }}" class="dish-photo">
+                {% else %}
+                    <div style="background-color: {{ dish.title|color_from_name }}; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                        <span class="dish-emoji">{{ dish.category|category_emoji }}</span>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="dish-info">
+                <h3>{{ dish.title }}</h3>
+                <span class="dish-category">{{ dish.category|category_label }}</span>
+                <p class="dish-description">{{ dish.description[:60] }}{% if dish.description|length > 60 %}...{% endif %}</p>
+                <div class="dish-footer">
+                    <span class="dish-price">{{ dish.price }} грн</span>
+                    <button class="btn-detail" onclick="alert('Страву додано до кошика! 🛒')">Замовити</button>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p class="no-dishes">Поки що немає страв. Додайте першу!</p>
+        {% endfor %}
+    </div>
+    <div class="view-all">
+        <a href="{{ url_for('add_sample_dishes') }}" class="btn-primary">➕ Додати зразкові страви</a>
+        <a href="{{ url_for('events') }}" class="btn-primary">📋 Переглянути повне меню</a>
+    </div>
+</section>
+{% endblock %}
