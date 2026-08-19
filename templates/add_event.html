@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Додати страву{% endblock %}
+
+{% block content %}
+<section class="add-dish-page">
+    <h1>Додати нову страву</h1>
+    <form method="POST" enctype="multipart/form-data" class="dish-form">
+        {{ form.hidden_tag() }}
+        
+        <div class="form-group">
+            {{ form.title.label }}
+            {{ form.title(class="form-control") }}
+            {% if form.title.errors %}
+                <ul class="form-errors">
+                    {% for error in form.title.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.category.label }}
+            {{ form.category(class="form-control") }}
+            {% if form.category.errors %}
+                <ul class="form-errors">
+                    {% for error in form.category.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.description.label }}
+            {{ form.description(class="form-control", rows=4) }}
+            {% if form.description.errors %}
+                <ul class="form-errors">
+                    {% for error in form.description.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.price.label }}
+            {{ form.price(class="form-control", step="0.01") }}
+            {% if form.price.errors %}
+                <ul class="form-errors">
+                    {% for error in form.price.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="form-group checkbox-group">
+            {{ form.is_available() }}
+            {{ form.is_available.label }}
+        </div>
+
+        <div class="form-group">
+            {{ form.image.label }}
+            {{ form.image(class="form-control-file") }}
+            {% if form.image.errors %}
+                <ul class="form-errors">
+                    {% for error in form.image.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.submit(class="btn-submit") }}
+        </div>
+    </form>
+</section>
+{% endblock %}
